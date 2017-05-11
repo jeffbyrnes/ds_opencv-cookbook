@@ -1,0 +1,47 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  subnet_id: subnet-cb48b582 # stage_public_0
+  security_group_ids:
+    - sg-547c152e # ci-testing-vpc
+  instance_type: c4.2xlarge
+  interface: public
+  tags:
+    Env: public
+    Type: test
+    Operator: <%= ENV['USER'] %>
+  block_device_mappings:
+    - device_name: /dev/sda1
+      ebs:
+        volume_size: 1000
+        delete_on_termination: true
+
+transport:
+  name: sftp
+  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+
+provisioner:
+  name: chef_zero
+  encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/ds_encrypted_data_bag_secret
+  data_bags_path: <%= ENV['CHEF_REPO'] %>/data_bags
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+
+suites:
+  - name: default
+    driver:
+      tags:
+        Name: ds-opencv-default-ubuntu-1604
+    run_list:
+      - recipe[ds_opencv::default]
+    attributes:
+      ds_opencv:
+        mocking: true
+      ds_base:
+        efs:
+          id: null # fs-e3cc05aa # stage-efs

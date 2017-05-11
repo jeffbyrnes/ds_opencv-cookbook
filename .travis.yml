@@ -1,0 +1,46 @@
+language: ruby
+rvm:
+- 2.2
+cache:
+  directories:
+  - "$HOME/.berkshelf"
+addons:
+  apt:
+    sources:
+    - chef-stable-precise
+    packages:
+    - chefdk
+branches:
+  only:
+  - master
+matrix:
+  fast_finish: true
+env:
+  matrix:
+  - TEST=cookstyle
+  - TEST="foodcritic ."
+  - TEST="chef exec rspec"
+  - TEST="kitchen test -d always"
+  global:
+  - KITCHEN_YAML=.kitchen.cloud.yml
+  - secure: sHNQYMw8DYHPhZWbecYNxc99BPRSqTeEVuBV4+Qsxz6pc5wsQfLu2+ipBGhcmq8R18MiBilXrFAOiE7gI3Zd35aul3h5dc3TVYJCYVTtx0Mzv1WrowXjyjAqNq61JYTqXXjWNjv3egB3/QsrMkuYXVyyxZie+9mlbGMOKzRj2K6q57pbChl2yGuwMP8biAlVCdWjC5KMp+ZFoJkTFRCdyyB4nUSptnleqbYuEIAvmWjOaOYcFaajEnYNDtVhrkvVnE/ueyI0rpO+DOzGGsiDA3/63ZdpgypDaC2oojSDWogjfrQ9+Auh7m7ZMiYsKBCGY8mThrDrAqnzvsySzT+6bB7VrHhqmgkwehxR/Fdu8dIcfIca7Qonf/IsUNkQcgUolB7/+qqMJ5JseZ8Wj5zwKP+NL3GZ5PDkooNxZn6OPwu/vWaVuuT+V6XPt937nm1MZ6qfjAs2TxwERbnvwsS3tR5EdPdIHGCl49sNOtI4T6a3i8/55YM4GLbHL44/HR/f6ZHDrGRW3JTZ0wCe3QtuFznTfbMY5+RC5T96RdylDZiiZ9VwrsPFkguUCW0rEbUeo3OlGXZ/yrF1lRt/oX98174iAYRDWujEjpkdEcgXpoU4TkOBEE4wgETXQpOh1mPez8h4df8J3+tsxGV4gfQzdk0effP91lC0/VeIPbYnF/c=
+  - secure: cYuxnAo+P00b1oT2rU+i6jNOkn4vvsTUv6FZPBbRAhYJJndTqJSPmkC0Kx5y1ZoE21SinPwRrUEhLqGokW50duuTG3O1Z6IaMOBfsyVxSlff0ZNNuIOUq6Ef3nIEYH4iS2jlpidI8EoEANW1UIrhNmglCBNRwOJliBNXDDFGqRdKYhSZpyo8LiMhF5BJLlBfL+o13YJEDnZCT5oqPDRyrVVPY81FuHEi4dnPR3gsk8pWO2Uy9xFkGDh1CbOGQeWGAzn535srR5jdUGQ9Nm8x8rXf9pM6tyKIFsueANiErLYbspfTK3rJtr88WVJzP/TCMYAMRKcMcpZ4Kd9CxXdP15zt3HI14yzZ5tiVtzw/mcFFONFXPUxJ6TjhVNAiIMkOTSNBs9by6E8nwmP02jOJ/jWAZTF0Ek0t7pvXZz9jCg1+BPs/YFkFwRQgoe4yMMWKgNFASN+3eYSOomuW4KLcxEf3/DyxmlAywV7lKr8HESFsn2NiXbZ1VpbxGTUeCK7q1hL+dM9wNeVjVG7EJa3Qs8JhzCB9GQ2l/HlPbwbKJ1DFjRTJe9intjPQVnFDN0SibtWmPNY2k+C9SY+PgF8w2JEJkDgOoYqH8nMUW9KqY0PV6D2AxV7v9lFSwWjg6WTnBK07EpURdWwUA4uArrIYoxNC0a1PQ9GpxWOqamnO1mk=
+before_install:
+- openssl aes-256-cbc -K $encrypted_229d5ad774d0_key -iv $encrypted_229d5ad774d0_iv
+  -in secrets.tar.enc -out secrets.tar -d
+- tar -xvf secrets.tar -C ~
+- echo 'node_name "ds_bot"' >> ~/.chef/knife.rb
+- echo 'client_key "~/.chef/ds_bot.pem"' >> ~/.chef/knife.rb
+- echo 'chef_server_url "https://api.chef.io/organizations/darksky"' >> ~/.chef/knife.rb
+- chmod 600 ~/.chef/knife.rb ~/.chef/ds_bot.pem ~/.ssh/ds_travis_ci
+- chef --version
+- eval "$(chef shell-init bash)"
+- cookstyle --version
+- foodcritic --version
+install:
+- chef gem install kitchen-sync
+- berks
+script: "$TEST"
+notifications:
+  slack:
+    secure: Q4Ehkw5zY1jea88veLMCrXbvnsMFpbuQ+wyOtESkewFSSdvBEU4b0qrde7akqbVOMXHrKWt4kuvI8+VduHyO3BvbY2UlbSAHJ0QTkRXQHJmiSazWcGooKexn5HTnGNA7m903z1C3xDNc9lQqqHHomh3+F9/9yKO+e7v2IKHyzijo359PQI8GXb4Uug2rmqlKlf83R4QgmSFUcZB9ktYgxY5ub7dGIbWvnT1xehhcDDqMwOhjxvQpvozzckyP7luPbgHu/pEabBBA9SzsASe8gI5+FZ2xMfQ+bGBuxyL9WS5nJ/J1v5z5FXexPIYUr4Bwz3aUZzb6knlu9kmBWKD5INMElEZ2Gia8gWtUqZV1prawvvUGXnfKJuXx2TxSYLA1Y7/A2grEyrbJJftVHig5bIz7k2yXO1fo1+xiMBDs35A6yfzQv3DTX3sqVC5SKNNJQACwUGuk+DRDrlDhNLDkhKVznbFBVmwyhAPg9M8bzHn+StIIYFuFdfNsJJxWywmVlcAc/ivOBviblVuFSP9X5h+F96gUBJ6qwa/3AVCE+5vO8PU7aSFI+P3zikOOGWvU0oEAJzy4/iPrfA0w13VRoh/y7hBe+4Z8iJJzsHRLY25J6pwuU4taM/l31/KHfcjl3NFZzKQ1bpp0VecMCHJ2xOH5xLTHDV9GF9z2mQZDYrU=

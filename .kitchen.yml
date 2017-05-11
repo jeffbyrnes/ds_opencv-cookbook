@@ -1,0 +1,25 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/ds_encrypted_data_bag_secret
+  data_bags_path: <%= ENV['CHEF_REPO'] %>/data_bags
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ds_opencv::default]
+    attributes:
+      ds_opencv:
+        mocking: true
+      ds_base:
+        efs:
+          id: null
