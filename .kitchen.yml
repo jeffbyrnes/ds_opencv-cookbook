@@ -1,6 +1,20 @@
 ---
 driver:
-  name: vagrant
+  name: ec2
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  subnet_id: subnet-d9102982 # development-public-0
+  security_group_ids:
+    - sg-093acf76 # ci-testing-vpc
+  instance_type: c4.large
+  interface: public
+  tags:
+    Env: public
+    Type: test
+    Operator: <%= ENV['USER'] %>
+
+transport:
+  name: sftp
+  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 provisioner:
   name: chef_zero
@@ -15,6 +29,9 @@ platforms:
 
 suites:
   - name: default
+    driver:
+      tags:
+        Name: ds-opencv-default-ubuntu-1604
     run_list:
       - recipe[ds_opencv::default]
     attributes:
