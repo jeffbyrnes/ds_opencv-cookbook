@@ -39,7 +39,6 @@ before_install:
 - foodcritic --version
 install:
 - chef gem install kitchen-sync
-- berks
 script: "$TEST"
 notifications:
   slack:
