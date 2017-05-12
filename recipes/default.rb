@@ -3,6 +3,11 @@
 #
 # Copyright (c) 2017 The Dark Sky Company, LLC, All Rights Reserved.
 
+apt_update 'opencv' do
+  action :update
+  only_if { platform_family? 'debian' }
+end
+
 include_recipe 'build-essential'
 
 %w(
