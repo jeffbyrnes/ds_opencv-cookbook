@@ -8,4 +8,3 @@ version          '1.1.0'
 
 depends 'build-essential'
 depends 'git'
-

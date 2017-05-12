@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2017 The Dark Sky Company, LLC, All Rights Reserved.
 
-build_essential 'compilers'
+include_recipe 'build-essential'
 
 %w(
   cmake
