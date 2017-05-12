@@ -46,5 +46,5 @@ execute 'make_opencv' do
   command 'make -j4 && make install && ldconfig'
   cwd     "#{opencv_path}/release"
   creates node['ds_opencv']['opencv']['cmake_define']['MAKE_INSTALL_PREFIX'] +
-          "/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
+          "/lib/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
 end
