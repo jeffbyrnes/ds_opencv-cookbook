@@ -9,6 +9,7 @@ apt_update 'opencv' do
 end
 
 include_recipe 'build-essential'
+include_recipe 'git'
 
 %w(
   cmake
