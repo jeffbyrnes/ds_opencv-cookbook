@@ -13,14 +13,7 @@ addons:
 branches:
   only:
   - master
-matrix:
-  fast_finish: true
 env:
-  matrix:
-  - TEST=cookstyle
-  - TEST="foodcritic ."
-  - TEST="chef exec rspec"
-  - TEST="kitchen test -d always"
   global:
   - KITCHEN_YAML=.kitchen.cloud.yml
   - secure: c6fvEPxa6Ty+oTQShic/Z1FXVAdgWcQSVR/g6lvkK8Gf7SlPW6aHMzBSTZGQpYC6qObeO25zsJLzi+YGWDXBWZ4BbvY5Y47yetxcNSFwVkR0GvHdWGXgznbkyrs6OTHItaPOcmQjOSticWbJojihhkf5ml3RbjxwYMUUGQAK8IAaPWbXmcFf4P4evHKfTS59hEPRNNNYQeiptiyuBbt8dIq5wN7aVcCsqu+bhPR4y1G4YhmVISlY3vJFrbInGYHYUuuN1hoZ/SsFCjuIjStYv7ogNwzfIGy596QurdP68kZ8oRtRd6ZKorZz/Y3wR/s4BV+HoDT3uAKdx2X7FKObOJIvYi1YECBTEj4MIbeXW+7mB62C8PMVuPSyx6GS1tzCZ4R24pTOUD9DF1EFZfQU2ikZhCXuBbcyXFJiM/Qh8l6Idmsxn7WB/VDQE97dlUHptlB1VRrEG+C2xPjPjY1+JoO8serskVSol+PREgNDG4nN9tVnuDNAQtPzadothm+kAs8D4FMD1csS7+2Svr7xardY8eiDoqwUCBqvRbqOALhlw14+okv71k+ppzqG7kRLKXlO3PD/fnyVIMoP3oIOG5NqXjzx4MRW2mZqvnJqUacWRNp+IkRRffDXGk2j5dFe5Oa7qKOnlnBnMQEybSyzeEhaCUy5zUSOO1W3o7/S3Ck=
@@ -39,7 +32,15 @@ before_install:
 - foodcritic --version
 install:
 - chef gem install kitchen-sync
-script: "$TEST"
+script: cookstyle
+jobs:
+  include:
+  - stage: test
+    script: foodcritic .
+  - stage: unit
+    script: chef exec rspec
+  - stage: integration
+    script: kitchen test -d always
 notifications:
   slack:
     secure: U3YDfrgI8V8ns5e69IWhA0K6sCJKO7qkJnmwffANv0u7cADq1hYBmNwNtPIJdPjENUnbw/5YI3jA2oRd9j9Sk++pPSXGN3QIHGFjdA6kVwfN8snJdGC4/cbBv7lCUz5Os/38+jx5sK+RHG47oS6KQzNbsApqhy46H/as+TD4eXkVrSc1hCsEkkx/2rEEzZwzXox+sGWqPybcHDnA0BnE3/70yHhH41AJD3I14pkPeQlQsdQWdz2KRNnUPQZo+5xaP4KeaujyOxsynnfVu2l3gp6vrvdiFy3R4aySQQj9GaRXyTf4f6utP+QCTA0HnM8O+zUUJuLVVi4qWDnSpvi0vDQsAt2fNsaE4pceVQqueKccYR/VqYTF6kRewqJZ+ogdRPUNx+pKtbIogpex9LQAJ4NGeQiI9GC0OdDMpsn8buDMw5B+w+C0iZu9lUNoO5rkM7erQK+WEKmfwuvrA6ciLuHMH9YHwg70AJQCJAFBTcBZ1OLJ22+0854XHEdSj6Oc26FXOgsBaAGrDgRzME5GgNCXYrVFuTRjcnEOuXSbp900nUHUbu2jjotlQI79bZK0kyl3QfzxwxLRNy/H3z4S+YxYhDc8ilCDNvQB9KhtqTTODkPt26cYxrfA6aV9nPEq30a1MZpapAYRyXA5TYogg5GBDtU0ROcrCqack/Dexwg=
