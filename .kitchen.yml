@@ -18,8 +18,6 @@ transport:
 
 provisioner:
   name: chef_zero
-  encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/ds_encrypted_data_bag_secret
-  data_bags_path: <%= ENV['CHEF_REPO'] %>/data_bags
 
 verifier:
   name: inspec
@@ -35,8 +33,3 @@ suites:
     run_list:
       - recipe[ds_opencv::default]
     attributes:
-      ds_opencv:
-        mocking: true
-      ds_base:
-        efs:
-          id: null
