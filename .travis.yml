@@ -31,15 +31,15 @@ before_install:
 - foodcritic --version
 install:
 - chef gem install kitchen-sync
-script: cookstyle
+script: delivery local lint
 jobs:
   include:
   - stage: test
-    script: foodcritic .
+    script: delivery local syntax
   - stage: unit
-    script: chef exec rspec
-  - stage: integration
-    script: kitchen test -d always
+    script: delivery local unit
+  - stage: acceptance
+    script: delivery local smoke; delivery local cleanup
 notifications:
   slack:
     secure: U3YDfrgI8V8ns5e69IWhA0K6sCJKO7qkJnmwffANv0u7cADq1hYBmNwNtPIJdPjENUnbw/5YI3jA2oRd9j9Sk++pPSXGN3QIHGFjdA6kVwfN8snJdGC4/cbBv7lCUz5Os/38+jx5sK+RHG47oS6KQzNbsApqhy46H/as+TD4eXkVrSc1hCsEkkx/2rEEzZwzXox+sGWqPybcHDnA0BnE3/70yHhH41AJD3I14pkPeQlQsdQWdz2KRNnUPQZo+5xaP4KeaujyOxsynnfVu2l3gp6vrvdiFy3R4aySQQj9GaRXyTf4f6utP+QCTA0HnM8O+zUUJuLVVi4qWDnSpvi0vDQsAt2fNsaE4pceVQqueKccYR/VqYTF6kRewqJZ+ogdRPUNx+pKtbIogpex9LQAJ4NGeQiI9GC0OdDMpsn8buDMw5B+w+C0iZu9lUNoO5rkM7erQK+WEKmfwuvrA6ciLuHMH9YHwg70AJQCJAFBTcBZ1OLJ22+0854XHEdSj6Oc26FXOgsBaAGrDgRzME5GgNCXYrVFuTRjcnEOuXSbp900nUHUbu2jjotlQI79bZK0kyl3QfzxwxLRNy/H3z4S+YxYhDc8ilCDNvQB9KhtqTTODkPt26cYxrfA6aV9nPEq30a1MZpapAYRyXA5TYogg5GBDtU0ROcrCqack/Dexwg=
