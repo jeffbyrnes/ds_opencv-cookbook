@@ -1,5 +1,12 @@
 # CHANGELOG for `ds_opencv` cookbook
 
+## v1.2.0
+
+* Add tests
+* Fix incorrect path to library to improve idempotency
+* Open source the cookbook
+* Initial release to Supermarket
+
 ## v1.1.0
 
 * Add some parallelism to opencv make
