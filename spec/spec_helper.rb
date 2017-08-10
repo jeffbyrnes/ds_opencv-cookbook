@@ -9,8 +9,4 @@ RSpec.configure do |c|
   c.formatter = :documentation
   c.platform  = 'ubuntu'
   c.version   = '16.04'
-
-  c.before do
-    stub_command('which nginx').and_return '/usr/bin/nginx'
-  end
 end

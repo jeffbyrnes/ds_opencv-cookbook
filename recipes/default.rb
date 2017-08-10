@@ -3,7 +3,13 @@
 #
 # Copyright (c) 2017 The Dark Sky Company, LLC, All Rights Reserved.
 
-build_essential 'compilers'
+apt_update 'opencv' do
+  action :update
+  only_if { platform_family? 'debian' }
+end
+
+include_recipe 'build-essential'
+include_recipe 'git'
 
 %w(
   cmake
@@ -40,5 +46,5 @@ execute 'make_opencv' do
   command 'make -j4 && make install && ldconfig'
   cwd     "#{opencv_path}/release"
   creates node['ds_opencv']['opencv']['cmake_define']['MAKE_INSTALL_PREFIX'] +
-          "/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
+          "/lib/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
 end

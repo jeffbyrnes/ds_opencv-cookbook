@@ -13,34 +13,33 @@ addons:
 branches:
   only:
   - master
-matrix:
-  fast_finish: true
 env:
-  matrix:
-  - TEST=cookstyle
-  - TEST="foodcritic ."
-  - TEST="chef exec rspec"
-  - TEST="kitchen test -d always"
   global:
-  - KITCHEN_YAML=.kitchen.cloud.yml
-  - secure: sHNQYMw8DYHPhZWbecYNxc99BPRSqTeEVuBV4+Qsxz6pc5wsQfLu2+ipBGhcmq8R18MiBilXrFAOiE7gI3Zd35aul3h5dc3TVYJCYVTtx0Mzv1WrowXjyjAqNq61JYTqXXjWNjv3egB3/QsrMkuYXVyyxZie+9mlbGMOKzRj2K6q57pbChl2yGuwMP8biAlVCdWjC5KMp+ZFoJkTFRCdyyB4nUSptnleqbYuEIAvmWjOaOYcFaajEnYNDtVhrkvVnE/ueyI0rpO+DOzGGsiDA3/63ZdpgypDaC2oojSDWogjfrQ9+Auh7m7ZMiYsKBCGY8mThrDrAqnzvsySzT+6bB7VrHhqmgkwehxR/Fdu8dIcfIca7Qonf/IsUNkQcgUolB7/+qqMJ5JseZ8Wj5zwKP+NL3GZ5PDkooNxZn6OPwu/vWaVuuT+V6XPt937nm1MZ6qfjAs2TxwERbnvwsS3tR5EdPdIHGCl49sNOtI4T6a3i8/55YM4GLbHL44/HR/f6ZHDrGRW3JTZ0wCe3QtuFznTfbMY5+RC5T96RdylDZiiZ9VwrsPFkguUCW0rEbUeo3OlGXZ/yrF1lRt/oX98174iAYRDWujEjpkdEcgXpoU4TkOBEE4wgETXQpOh1mPez8h4df8J3+tsxGV4gfQzdk0effP91lC0/VeIPbYnF/c=
-  - secure: cYuxnAo+P00b1oT2rU+i6jNOkn4vvsTUv6FZPBbRAhYJJndTqJSPmkC0Kx5y1ZoE21SinPwRrUEhLqGokW50duuTG3O1Z6IaMOBfsyVxSlff0ZNNuIOUq6Ef3nIEYH4iS2jlpidI8EoEANW1UIrhNmglCBNRwOJliBNXDDFGqRdKYhSZpyo8LiMhF5BJLlBfL+o13YJEDnZCT5oqPDRyrVVPY81FuHEi4dnPR3gsk8pWO2Uy9xFkGDh1CbOGQeWGAzn535srR5jdUGQ9Nm8x8rXf9pM6tyKIFsueANiErLYbspfTK3rJtr88WVJzP/TCMYAMRKcMcpZ4Kd9CxXdP15zt3HI14yzZ5tiVtzw/mcFFONFXPUxJ6TjhVNAiIMkOTSNBs9by6E8nwmP02jOJ/jWAZTF0Ek0t7pvXZz9jCg1+BPs/YFkFwRQgoe4yMMWKgNFASN+3eYSOomuW4KLcxEf3/DyxmlAywV7lKr8HESFsn2NiXbZ1VpbxGTUeCK7q1hL+dM9wNeVjVG7EJa3Qs8JhzCB9GQ2l/HlPbwbKJ1DFjRTJe9intjPQVnFDN0SibtWmPNY2k+C9SY+PgF8w2JEJkDgOoYqH8nMUW9KqY0PV6D2AxV7v9lFSwWjg6WTnBK07EpURdWwUA4uArrIYoxNC0a1PQ9GpxWOqamnO1mk=
+  - secure: c6fvEPxa6Ty+oTQShic/Z1FXVAdgWcQSVR/g6lvkK8Gf7SlPW6aHMzBSTZGQpYC6qObeO25zsJLzi+YGWDXBWZ4BbvY5Y47yetxcNSFwVkR0GvHdWGXgznbkyrs6OTHItaPOcmQjOSticWbJojihhkf5ml3RbjxwYMUUGQAK8IAaPWbXmcFf4P4evHKfTS59hEPRNNNYQeiptiyuBbt8dIq5wN7aVcCsqu+bhPR4y1G4YhmVISlY3vJFrbInGYHYUuuN1hoZ/SsFCjuIjStYv7ogNwzfIGy596QurdP68kZ8oRtRd6ZKorZz/Y3wR/s4BV+HoDT3uAKdx2X7FKObOJIvYi1YECBTEj4MIbeXW+7mB62C8PMVuPSyx6GS1tzCZ4R24pTOUD9DF1EFZfQU2ikZhCXuBbcyXFJiM/Qh8l6Idmsxn7WB/VDQE97dlUHptlB1VRrEG+C2xPjPjY1+JoO8serskVSol+PREgNDG4nN9tVnuDNAQtPzadothm+kAs8D4FMD1csS7+2Svr7xardY8eiDoqwUCBqvRbqOALhlw14+okv71k+ppzqG7kRLKXlO3PD/fnyVIMoP3oIOG5NqXjzx4MRW2mZqvnJqUacWRNp+IkRRffDXGk2j5dFe5Oa7qKOnlnBnMQEybSyzeEhaCUy5zUSOO1W3o7/S3Ck=
+  - secure: AITys7j6rOCxq6riMZioODt11XxMaGZCVEetdeIwWRgWL7z6wGKlNY9hOo1Ps1bDBDCM8rqJWyvkMOTCuU7aviFHWv+NSAdt5LpyAAK16lZT8RQtPiVwZUADQCWpdHIyKf+ocMAP0kDzHXE3DL0SsfKQBN3J9rZdluYa2qZF/sd/kKiuKVixU6dJw8oiTSwrsXUX6FaHLDY/82GhQLetpk1I2D/van7JahXU5cf17byZLXZu/+kqC/2O6UeQeTink+6czxLWRQsdMI/nCgDsHjTFBLlGYCASwJCIbebTG4272EHcSH7G/2gv64YmkWg64PtcZK4lf5/GjEb15m4LdeUGzhLh6GmaMcmxoemtq0zzFBCar3JiWuSUT2I30uNQFINUF/Ai9GRvexyWomkMZk7KP8CHj6P6rS3sCbH5PbjGE+KGn5O5/t/0ADtZItt7NOKQ8hlLQ83NGnuBjowdsxUBNuMuGxe42s05lgVOHgKD+GdByn4zzqLBaUsvVlOAqHAq6dllzZHxgAx29IEL2TO/foyX4MEVUeGdsBaCdYliRvb3Qzq/j7T0S1tXDkG6HBK4E7OCr87/Z1B9qmtakwzaZbBX6hoIjn8StBJ+BjyIjh+OnrV6TI8oyk+WKywpDpZlLJ9tlY69qGm5vsRJth1zVBuOnQOWxPC23MoSrPo=
 before_install:
-- openssl aes-256-cbc -K $encrypted_229d5ad774d0_key -iv $encrypted_229d5ad774d0_iv
+- openssl aes-256-cbc -K $encrypted_25d68ab26777_key -iv $encrypted_25d68ab26777_iv
   -in secrets.tar.enc -out secrets.tar -d
-- tar -xvf secrets.tar -C ~
-- echo 'node_name "ds_bot"' >> ~/.chef/knife.rb
-- echo 'client_key "~/.chef/ds_bot.pem"' >> ~/.chef/knife.rb
-- echo 'chef_server_url "https://api.chef.io/organizations/darksky"' >> ~/.chef/knife.rb
-- chmod 600 ~/.chef/knife.rb ~/.chef/ds_bot.pem ~/.ssh/ds_travis_ci
+- tar -xvf secrets.tar -C $HOME
+- echo 'node_name "ds_bot"' >> $HOME/.chef/knife.rb
+- echo "client_key \"#{ENV['HOME']}/.chef/ds_bot.pem\"" >> $HOME/.chef/knife.rb
+- echo 'chef_server_url "https://chef.darksky.net/organizations/darksky"' >> $HOME/.chef/knife.rb
+- chmod 600 $HOME/.chef/knife.rb $HOME/.chef/ds_bot.pem $HOME/.ssh/ds_travis_ci
 - chef --version
 - eval "$(chef shell-init bash)"
 - cookstyle --version
 - foodcritic --version
 install:
 - chef gem install kitchen-sync
-- berks
-script: "$TEST"
+script: delivery local lint
+jobs:
+  include:
+  - stage: test
+    script: delivery local syntax
+  - stage: unit
+    script: delivery local unit
+  - stage: acceptance
+    script: delivery local smoke; delivery local cleanup
 notifications:
   slack:
-    secure: Q4Ehkw5zY1jea88veLMCrXbvnsMFpbuQ+wyOtESkewFSSdvBEU4b0qrde7akqbVOMXHrKWt4kuvI8+VduHyO3BvbY2UlbSAHJ0QTkRXQHJmiSazWcGooKexn5HTnGNA7m903z1C3xDNc9lQqqHHomh3+F9/9yKO+e7v2IKHyzijo359PQI8GXb4Uug2rmqlKlf83R4QgmSFUcZB9ktYgxY5ub7dGIbWvnT1xehhcDDqMwOhjxvQpvozzckyP7luPbgHu/pEabBBA9SzsASe8gI5+FZ2xMfQ+bGBuxyL9WS5nJ/J1v5z5FXexPIYUr4Bwz3aUZzb6knlu9kmBWKD5INMElEZ2Gia8gWtUqZV1prawvvUGXnfKJuXx2TxSYLA1Y7/A2grEyrbJJftVHig5bIz7k2yXO1fo1+xiMBDs35A6yfzQv3DTX3sqVC5SKNNJQACwUGuk+DRDrlDhNLDkhKVznbFBVmwyhAPg9M8bzHn+StIIYFuFdfNsJJxWywmVlcAc/ivOBviblVuFSP9X5h+F96gUBJ6qwa/3AVCE+5vO8PU7aSFI+P3zikOOGWvU0oEAJzy4/iPrfA0w13VRoh/y7hBe+4Z8iJJzsHRLY25J6pwuU4taM/l31/KHfcjl3NFZzKQ1bpp0VecMCHJ2xOH5xLTHDV9GF9z2mQZDYrU=
+    secure: U3YDfrgI8V8ns5e69IWhA0K6sCJKO7qkJnmwffANv0u7cADq1hYBmNwNtPIJdPjENUnbw/5YI3jA2oRd9j9Sk++pPSXGN3QIHGFjdA6kVwfN8snJdGC4/cbBv7lCUz5Os/38+jx5sK+RHG47oS6KQzNbsApqhy46H/as+TD4eXkVrSc1hCsEkkx/2rEEzZwzXox+sGWqPybcHDnA0BnE3/70yHhH41AJD3I14pkPeQlQsdQWdz2KRNnUPQZo+5xaP4KeaujyOxsynnfVu2l3gp6vrvdiFy3R4aySQQj9GaRXyTf4f6utP+QCTA0HnM8O+zUUJuLVVi4qWDnSpvi0vDQsAt2fNsaE4pceVQqueKccYR/VqYTF6kRewqJZ+ogdRPUNx+pKtbIogpex9LQAJ4NGeQiI9GC0OdDMpsn8buDMw5B+w+C0iZu9lUNoO5rkM7erQK+WEKmfwuvrA6ciLuHMH9YHwg70AJQCJAFBTcBZ1OLJ22+0854XHEdSj6Oc26FXOgsBaAGrDgRzME5GgNCXYrVFuTRjcnEOuXSbp900nUHUbu2jjotlQI79bZK0kyl3QfzxwxLRNy/H3z4S+YxYhDc8ilCDNvQB9KhtqTTODkPt26cYxrfA6aV9nPEq30a1MZpapAYRyXA5TYogg5GBDtU0ROcrCqack/Dexwg=
