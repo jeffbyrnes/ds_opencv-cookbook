@@ -1,4 +1,4 @@
-# ds_opencv
+# ds_opencv [![Build Status](https://travis-ci.com/darkskyapp/ds_opencv-cookbook.svg?token=vzn53TxKibyna3mpTyDZ&branch=master)](https://travis-ci.com/darkskyapp/ds_opencv-cookbook)
 
 Cookbook to build and install opencv
 
