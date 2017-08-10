@@ -1,4 +1,3 @@
 # ds_opencv
 
-Cookbook to bulid and install opencv
-
+Cookbook to build and install opencv
