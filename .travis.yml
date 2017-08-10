@@ -10,9 +10,6 @@ addons:
     - chef-stable-precise
     packages:
     - chefdk
-branches:
-  only:
-  - master
 env:
   global:
   - secure: c6fvEPxa6Ty+oTQShic/Z1FXVAdgWcQSVR/g6lvkK8Gf7SlPW6aHMzBSTZGQpYC6qObeO25zsJLzi+YGWDXBWZ4BbvY5Y47yetxcNSFwVkR0GvHdWGXgznbkyrs6OTHItaPOcmQjOSticWbJojihhkf5ml3RbjxwYMUUGQAK8IAaPWbXmcFf4P4evHKfTS59hEPRNNNYQeiptiyuBbt8dIq5wN7aVcCsqu+bhPR4y1G4YhmVISlY3vJFrbInGYHYUuuN1hoZ/SsFCjuIjStYv7ogNwzfIGy596QurdP68kZ8oRtRd6ZKorZz/Y3wR/s4BV+HoDT3uAKdx2X7FKObOJIvYi1YECBTEj4MIbeXW+7mB62C8PMVuPSyx6GS1tzCZ4R24pTOUD9DF1EFZfQU2ikZhCXuBbcyXFJiM/Qh8l6Idmsxn7WB/VDQE97dlUHptlB1VRrEG+C2xPjPjY1+JoO8serskVSol+PREgNDG4nN9tVnuDNAQtPzadothm+kAs8D4FMD1csS7+2Svr7xardY8eiDoqwUCBqvRbqOALhlw14+okv71k+ppzqG7kRLKXlO3PD/fnyVIMoP3oIOG5NqXjzx4MRW2mZqvnJqUacWRNp+IkRRffDXGk2j5dFe5Oa7qKOnlnBnMQEybSyzeEhaCUy5zUSOO1W3o7/S3Ck=
@@ -30,7 +27,7 @@ before_install:
 - cookstyle --version
 - foodcritic --version
 install:
-- chef gem install kitchen-sync
+- chef gem install kitchen-sync stove
 script: delivery local lint
 jobs:
   include:
@@ -40,6 +37,23 @@ jobs:
     script: delivery local unit
   - stage: acceptance
     script: delivery local smoke; delivery local cleanup
+  - stage: GitHub Release
+    script: echo "Deploying to GitHub releases ..."
+    deploy:
+      provider: releases
+      api_key:
+        secure: nHAsrJKmjBaISfPLhP2nb76UyWAj1KR26Yis9hxU9h37kLMqIErT7mTO6aGA/qYNMLNcXLIplXy2qqLT4YxphgdZjLzDNPsXU/66FeEJB9MiBGEAVEyS76GSPtG+iggwtsxCLGz1OmQrM6T0EGD9NbsIY5vO0tsrqKuuK8lvA59Doe/JQlLJCihQYv+AKU4g7jgSswna7x8I0q7OIGH+3fmoTTXJ8/vN4VPI99e3Oa1GZYj84K+RHqY/JiB18KAJkRVjGjE8AB8BSGx5w+RaHSfH4a8CiqJXjQ1NOiLYx4ZFflJXxqHQtzx+wTlgtMazYyEZ87OcAvdeYD+dXr8GI0k61M0O5xqmBiQkkJsjQxZO9kPIX8Gzx3z7d+t0WGojSMiClL7v2bsdbwyV5QpY1BMj81jSwSOrRA0vk4migC/+Rb+wnqhoXNHMVc94NCWaIXLS6w5g28nQCaUL70p4YpzMEozTSpWc3shG/kECxdhV2J8b4O7RJaQ2f7E41JdepY81+N7z9itkB/pgTgjPgQWWLa9nYI4RIJlSwOYMcmveReWWZJ96wYpLJCvlhFJj8Kwn6akqwKl2Q8QANG2E3ycqqLPyBf2++cd7fppsi5nH7eky33UDz/S0zmFzyt1ngpV9G9lFaGl8oXnTW+ChUA9FV61yEveSwNIqThLm3pY=
+      skip_cleanup: true
+      on:
+        tags: true
+  - stage: Publish to Supermarket
+    script: echo "Uploading to Chef Supermarket ..."
+    deploy:
+      provider: script
+      script: chef exec stove --no-git --username ds_bot --key $HOME/.chef/ds_bot.pem
+      skip_cleanup: true
+      on:
+        tags: true
 notifications:
   slack:
     secure: U3YDfrgI8V8ns5e69IWhA0K6sCJKO7qkJnmwffANv0u7cADq1hYBmNwNtPIJdPjENUnbw/5YI3jA2oRd9j9Sk++pPSXGN3QIHGFjdA6kVwfN8snJdGC4/cbBv7lCUz5Os/38+jx5sK+RHG47oS6KQzNbsApqhy46H/as+TD4eXkVrSc1hCsEkkx/2rEEzZwzXox+sGWqPybcHDnA0BnE3/70yHhH41AJD3I14pkPeQlQsdQWdz2KRNnUPQZo+5xaP4KeaujyOxsynnfVu2l3gp6vrvdiFy3R4aySQQj9GaRXyTf4f6utP+QCTA0HnM8O+zUUJuLVVi4qWDnSpvi0vDQsAt2fNsaE4pceVQqueKccYR/VqYTF6kRewqJZ+ogdRPUNx+pKtbIogpex9LQAJ4NGeQiI9GC0OdDMpsn8buDMw5B+w+C0iZu9lUNoO5rkM7erQK+WEKmfwuvrA6ciLuHMH9YHwg70AJQCJAFBTcBZ1OLJ22+0854XHEdSj6Oc26FXOgsBaAGrDgRzME5GgNCXYrVFuTRjcnEOuXSbp900nUHUbu2jjotlQI79bZK0kyl3QfzxwxLRNy/H3z4S+YxYhDc8ilCDNvQB9KhtqTTODkPt26cYxrfA6aV9nPEq30a1MZpapAYRyXA5TYogg5GBDtU0ROcrCqack/Dexwg=
