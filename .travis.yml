@@ -1,6 +1,4 @@
 language: ruby
-rvm:
-- 2.2
 cache:
   directories:
   - "$HOME/.berkshelf"
@@ -24,8 +22,6 @@ before_install:
 - chmod 600 $HOME/.chef/knife.rb $HOME/.chef/ds_bot.pem $HOME/.ssh/ds_travis_ci
 - chef --version
 - eval "$(chef shell-init bash)"
-- cookstyle --version
-- foodcritic --version
 install:
 - chef gem install kitchen-sync stove
 script: delivery local lint
