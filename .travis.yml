@@ -25,15 +25,10 @@ before_install:
 - eval "$(chef shell-init bash)"
 install:
 - chef gem install kitchen-sync stove
-script: delivery local lint
 jobs:
   include:
   - stage: test
-    script: delivery local syntax
-  - stage: unit
-    script: delivery local unit
-  - stage: acceptance
-    script: delivery local smoke; delivery local cleanup
+    script: chef exec delivery local all
   - stage: GitHub Release
     script: echo "Deploying to GitHub releases ..."
     deploy:
