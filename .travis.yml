@@ -8,6 +8,7 @@ addons:
     - chef-stable-trusty
     packages:
     - chefdk
+if: (type = pull_request) OR (tag IS present)
 env:
   global:
   - secure: c6fvEPxa6Ty+oTQShic/Z1FXVAdgWcQSVR/g6lvkK8Gf7SlPW6aHMzBSTZGQpYC6qObeO25zsJLzi+YGWDXBWZ4BbvY5Y47yetxcNSFwVkR0GvHdWGXgznbkyrs6OTHItaPOcmQjOSticWbJojihhkf5ml3RbjxwYMUUGQAK8IAaPWbXmcFf4P4evHKfTS59hEPRNNNYQeiptiyuBbt8dIq5wN7aVcCsqu+bhPR4y1G4YhmVISlY3vJFrbInGYHYUuuN1hoZ/SsFCjuIjStYv7ogNwzfIGy596QurdP68kZ8oRtRd6ZKorZz/Y3wR/s4BV+HoDT3uAKdx2X7FKObOJIvYi1YECBTEj4MIbeXW+7mB62C8PMVuPSyx6GS1tzCZ4R24pTOUD9DF1EFZfQU2ikZhCXuBbcyXFJiM/Qh8l6Idmsxn7WB/VDQE97dlUHptlB1VRrEG+C2xPjPjY1+JoO8serskVSol+PREgNDG4nN9tVnuDNAQtPzadothm+kAs8D4FMD1csS7+2Svr7xardY8eiDoqwUCBqvRbqOALhlw14+okv71k+ppzqG7kRLKXlO3PD/fnyVIMoP3oIOG5NqXjzx4MRW2mZqvnJqUacWRNp+IkRRffDXGk2j5dFe5Oa7qKOnlnBnMQEybSyzeEhaCUy5zUSOO1W3o7/S3Ck=
