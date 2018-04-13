@@ -17,7 +17,7 @@ before_install:
 - chef --version
 - eval "$(chef shell-init bash)"
 install:
-- chef gem install kitchen-sync stove
+- chef gem install stove
 jobs:
   include:
   - stage: test
