@@ -18,7 +18,7 @@ describe 'ds_opencv::default' do
     end
 
     it 'updates apt' do
-      expect(chef_run).to update_apt_update 'opencv'
+      expect(chef_run).to include_recipe 'apt'
     end
 
     it 'sets up our build environment' do
