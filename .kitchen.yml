@@ -2,17 +2,13 @@
 driver:
   name: ec2
   subnet_id: subnet-f1f6acac # development-public-us-east-1b
-  security_group_ids:
-    - sg-8fea3af9 # ci-testing-vpc
-  instance_type: c4.large
-  interface: public
+  instance_type: c5.large
   tags:
     Env: public
     Type: test
     Operator: <%= ENV['USER'] %>
 
 transport:
-  name: sftp
   ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
 
 provisioner:

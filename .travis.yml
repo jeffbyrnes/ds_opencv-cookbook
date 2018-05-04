@@ -14,26 +14,14 @@ env:
   - secure: c6fvEPxa6Ty+oTQShic/Z1FXVAdgWcQSVR/g6lvkK8Gf7SlPW6aHMzBSTZGQpYC6qObeO25zsJLzi+YGWDXBWZ4BbvY5Y47yetxcNSFwVkR0GvHdWGXgznbkyrs6OTHItaPOcmQjOSticWbJojihhkf5ml3RbjxwYMUUGQAK8IAaPWbXmcFf4P4evHKfTS59hEPRNNNYQeiptiyuBbt8dIq5wN7aVcCsqu+bhPR4y1G4YhmVISlY3vJFrbInGYHYUuuN1hoZ/SsFCjuIjStYv7ogNwzfIGy596QurdP68kZ8oRtRd6ZKorZz/Y3wR/s4BV+HoDT3uAKdx2X7FKObOJIvYi1YECBTEj4MIbeXW+7mB62C8PMVuPSyx6GS1tzCZ4R24pTOUD9DF1EFZfQU2ikZhCXuBbcyXFJiM/Qh8l6Idmsxn7WB/VDQE97dlUHptlB1VRrEG+C2xPjPjY1+JoO8serskVSol+PREgNDG4nN9tVnuDNAQtPzadothm+kAs8D4FMD1csS7+2Svr7xardY8eiDoqwUCBqvRbqOALhlw14+okv71k+ppzqG7kRLKXlO3PD/fnyVIMoP3oIOG5NqXjzx4MRW2mZqvnJqUacWRNp+IkRRffDXGk2j5dFe5Oa7qKOnlnBnMQEybSyzeEhaCUy5zUSOO1W3o7/S3Ck=
   - secure: AITys7j6rOCxq6riMZioODt11XxMaGZCVEetdeIwWRgWL7z6wGKlNY9hOo1Ps1bDBDCM8rqJWyvkMOTCuU7aviFHWv+NSAdt5LpyAAK16lZT8RQtPiVwZUADQCWpdHIyKf+ocMAP0kDzHXE3DL0SsfKQBN3J9rZdluYa2qZF/sd/kKiuKVixU6dJw8oiTSwrsXUX6FaHLDY/82GhQLetpk1I2D/van7JahXU5cf17byZLXZu/+kqC/2O6UeQeTink+6czxLWRQsdMI/nCgDsHjTFBLlGYCASwJCIbebTG4272EHcSH7G/2gv64YmkWg64PtcZK4lf5/GjEb15m4LdeUGzhLh6GmaMcmxoemtq0zzFBCar3JiWuSUT2I30uNQFINUF/Ai9GRvexyWomkMZk7KP8CHj6P6rS3sCbH5PbjGE+KGn5O5/t/0ADtZItt7NOKQ8hlLQ83NGnuBjowdsxUBNuMuGxe42s05lgVOHgKD+GdByn4zzqLBaUsvVlOAqHAq6dllzZHxgAx29IEL2TO/foyX4MEVUeGdsBaCdYliRvb3Qzq/j7T0S1tXDkG6HBK4E7OCr87/Z1B9qmtakwzaZbBX6hoIjn8StBJ+BjyIjh+OnrV6TI8oyk+WKywpDpZlLJ9tlY69qGm5vsRJth1zVBuOnQOWxPC23MoSrPo=
 before_install:
-- openssl aes-256-cbc -K $encrypted_25d68ab26777_key -iv $encrypted_25d68ab26777_iv
-  -in secrets.tar.enc -out secrets.tar -d
-- tar -xvf secrets.tar -C $HOME
-- echo 'node_name "ds_bot"' >> $HOME/.chef/knife.rb
-- echo "client_key \"#{ENV['HOME']}/.chef/ds_bot.pem\"" >> $HOME/.chef/knife.rb
-- echo 'chef_server_url "https://chef.darksky.net/organizations/darksky"' >> $HOME/.chef/knife.rb
-- chmod 600 $HOME/.chef/knife.rb $HOME/.chef/ds_bot.pem $HOME/.ssh/ds_travis_ci
 - chef --version
 - eval "$(chef shell-init bash)"
 install:
-- chef gem install kitchen-sync stove
-script: delivery local lint
+- chef gem install stove
 jobs:
   include:
   - stage: test
-    script: delivery local syntax
-  - stage: unit
-    script: delivery local unit
-  - stage: acceptance
-    script: delivery local smoke; delivery local cleanup
+    script: chef exec delivery local all
   - stage: GitHub Release
     script: echo "Deploying to GitHub releases ..."
     deploy:
@@ -47,7 +35,7 @@ jobs:
     script: echo "Uploading to Chef Supermarket ..."
     deploy:
       provider: script
-      script: chef exec stove --no-git --username ds_bot --key $HOME/.chef/ds_bot.pem
+      script: chef exec stove --no-git --username darksky --key $HOME/.chef/darksky.pem
       skip_cleanup: true
       on:
         tags: true
