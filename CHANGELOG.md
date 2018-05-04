@@ -1,5 +1,9 @@
 # CHANGELOG for `ds_opencv` cookbook
 
+## v1.3.0
+
+* Use `apt` cookbook instead of directly calling `apt_update` resource
+
 ## v1.2.0
 
 * Add tests
