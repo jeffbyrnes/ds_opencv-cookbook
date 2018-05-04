@@ -13,5 +13,6 @@ chef_version '>= 12.11'
 
 supports 'ubuntu', '= 16.04'
 
+depends 'apt'
 depends 'build-essential'
 depends 'git'
