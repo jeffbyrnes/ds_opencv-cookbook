@@ -4,7 +4,7 @@ driver:
   subnet_id: subnet-f1f6acac # development-public-us-east-1b
   instance_type: c5.large
   tags:
-    Env: public
+    Env: test
     Type: test
     Operator: <%= ENV['USER'] %>
 
