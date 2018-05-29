@@ -8,9 +8,6 @@ driver:
     Type: test
     Operator: <%= ENV['USER'] %>
 
-transport:
-  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
-
 provisioner:
   name: chef_zero
 
