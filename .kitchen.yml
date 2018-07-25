@@ -15,13 +15,13 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
+  - name: ubuntu-18.04
 
 suites:
   - name: default
     driver:
       tags:
-        Name: ds-opencv-default-ubuntu-1604
+        Name: ds-opencv-default-ubuntu-1804
     run_list:
       - recipe[ds_opencv::default]
     attributes:

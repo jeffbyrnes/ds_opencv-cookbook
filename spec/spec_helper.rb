@@ -8,5 +8,5 @@ RSpec.configure do |c|
   c.color     = true
   c.formatter = :documentation
   c.platform  = 'ubuntu'
-  c.version   = '16.04'
+  c.version   = '18.04'
 end

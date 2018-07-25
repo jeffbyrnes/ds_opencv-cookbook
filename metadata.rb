@@ -11,7 +11,7 @@ issues_url 'https://github.com/darkskyapp/ds_opencv-cookbook/issues'
 
 chef_version '>= 12.11'
 
-supports 'ubuntu', '= 16.04'
+supports 'ubuntu', '= 18.04'
 
 depends 'apt'
 depends 'build-essential'

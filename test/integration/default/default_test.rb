@@ -12,8 +12,7 @@ control 'ds_opencv' do
     gfortran
     libjpeg8-dev
     libtiff5-dev
-    libjasper-dev
-    libpng12-dev
+    libpng-dev
     libatlas-base-dev
   ).each do |pkg|
     describe package pkg do

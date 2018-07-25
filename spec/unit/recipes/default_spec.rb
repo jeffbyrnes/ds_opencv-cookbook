@@ -7,7 +7,7 @@
 require 'spec_helper'
 
 describe 'ds_opencv::default' do
-  context 'When all attributes are default, on Ubuntu 16.04' do
+  context 'When all attributes are default, on Ubuntu 18.04' do
     let(:chef_run) { ChefSpec::ServerRunner.new.converge described_recipe }
 
     let(:opencv_path) { '/opt/opencv-3.2.0' }
@@ -30,8 +30,7 @@ describe 'ds_opencv::default' do
       gfortran
       libjpeg8-dev
       libtiff5-dev
-      libjasper-dev
-      libpng12-dev
+      libpng-dev
       libatlas-base-dev
     ).each do |pkg|
       it "installs #{pkg}" do
