@@ -5,22 +5,24 @@
 
 control 'ds_opencv' do
   impact 1.0
-  title 'Verify OpenCV v3.x and its dependencies are installed'
+  title 'Verify OpenCV v2.x and its dependencies are installed'
 
   %w(
     cmake
-    gfortran
-    libjpeg8-dev
-    libtiff5-dev
-    libpng-dev
-    libatlas-base-dev
+    libgtk2.0-dev
+    pkg-config
+    libavcodec-dev
+    libavformat-dev
+    libswscale-dev
+    python-dev
+    python-numpy
   ).each do |pkg|
     describe package pkg do
       it { should be_installed }
     end
   end
 
-  describe file '/usr/local/lib/libopencv_core.so.3.2.0' do
+  describe file '/usr/local/lib/libopencv_core.so.2.4.13.4' do
     it { should exist }
   end
 end

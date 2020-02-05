@@ -34,3 +34,11 @@ suites:
     run_list:
       - recipe[ds_opencv::default]
     attributes:
+
+  - name: opencv2
+    driver:
+      tags:
+        Name: ds-opencv-opencv2-ubuntu-1804
+    run_list:
+      - recipe[ds_opencv::default]
+    attributes:

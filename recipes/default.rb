@@ -20,14 +20,29 @@ apt_update
 build_essential
 include_recipe 'git'
 
-%w(
-  cmake
-  gfortran
-  libjpeg8-dev
-  libtiff5-dev
-  libpng-dev
-  libatlas-base-dev
-).each do |pkg|
+packages = if node['ds_opencv']['opencv']['version'][0] == '2'
+             %w(
+               cmake
+               libgtk2.0-dev
+               pkg-config
+               libavcodec-dev
+               libavformat-dev
+               libswscale-dev
+               python-dev
+               python-numpy
+             )
+           else
+             %w(
+               cmake
+               gfortran
+               libjpeg8-dev
+               libtiff5-dev
+               libpng-dev
+               libatlas-base-dev
+             )
+           end
+
+packages.each do |pkg|
   package pkg
 end
 

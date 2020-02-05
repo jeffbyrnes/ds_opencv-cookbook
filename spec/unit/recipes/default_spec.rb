@@ -19,55 +19,89 @@
 
 require 'spec_helper'
 
+shared_examples 'ds_opencv' do
+  it 'converges successfully' do
+    expect { chef_run }.to_not raise_error
+  end
+
+  it 'installs OpenCV dependencies' do
+    packages.each do |pkg|
+      expect(chef_run).to install_package pkg
+    end
+  end
+
+  it 'clones and checks out OpenCV' do
+    expect(chef_run).to checkout_git(opencv_path).with(
+      repository: 'https://github.com/opencv/opencv.git',
+      revision: opencv_version.to_s
+    )
+  end
+
+  it 'creates a release dir for OpenCV' do
+    expect(chef_run).to create_directory "#{opencv_path}/release"
+  end
+
+  it 'builds & installs OpenCV from source' do
+    expect(chef_run).to run_execute('cmake_opencv').with(
+      command: 'cmake -D MAKE_BUILD_TYPE=RELEASE -D MAKE_INSTALL_PREFIX=/usr/local ' \
+               '-D BUILD_PERF_TESTS=OFF -D WITH_GTK=OFF -D WITH_FFMPEG=OFF ' \
+               '-D WITH_GSTREAMER=OFF -D WITH_CUDA=OFF ..',
+      cwd: "#{opencv_path}/release",
+      creates: "#{opencv_path}/release/Makefile"
+    )
+
+    expect(chef_run).to run_execute('make_opencv').with(
+      command: 'make -j4 && make install && ldconfig',
+      cwd: "#{opencv_path}/release",
+      creates: "/usr/local/lib/libopencv_core.so.#{opencv_version}"
+    )
+  end
+end
+
 describe 'ds_opencv::default' do
   context 'When all attributes are default, on Ubuntu 18.04' do
     platform 'ubuntu', '18.04'
 
     let(:opencv_path) { '/opt/opencv-3.2.0' }
     let(:opencv_version) { '3.2.0' }
-
-    it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
-    end
-
-    %w(
-      cmake
-      gfortran
-      libjpeg8-dev
-      libtiff5-dev
-      libpng-dev
-      libatlas-base-dev
-    ).each do |pkg|
-      it "installs #{pkg}" do
-        expect(chef_run).to install_package pkg
-      end
-    end
-
-    it 'clones and checks out OpenCV v3.2.0' do
-      expect(chef_run).to checkout_git(opencv_path).with(
-        repository: 'https://github.com/opencv/opencv.git',
-        revision: opencv_version.to_s
+    let(:packages) do
+      %w(
+        cmake
+        gfortran
+        libjpeg8-dev
+        libtiff5-dev
+        libpng-dev
+        libatlas-base-dev
       )
     end
 
-    it 'creates a release dir for OpenCV' do
-      expect(chef_run).to create_directory "#{opencv_path}/release"
+    it_behaves_like 'ds_opencv'
+  end
+
+  context 'When installing OpenCV v2.x, on Ubuntu 18.04' do
+    platform 'ubuntu', '18.04'
+
+    # README: Setting this as a local variable due to how RSpec handles scope
+    #         Avoids duplication in the following assignments
+    version = '2.4.13.4'
+
+    override_attributes['ds_opencv']['opencv']['version'] = version
+
+    let(:opencv_version) { version }
+    let(:opencv_path) { "/opt/opencv-#{version}" }
+    let(:packages) do
+      %w(
+        cmake
+        libgtk2.0-dev
+        pkg-config
+        libavcodec-dev
+        libavformat-dev
+        libswscale-dev
+        python-dev
+        python-numpy
+      )
     end
 
-    it 'builds & installs OpenCV from source' do
-      expect(chef_run).to run_execute('cmake_opencv').with(
-        command: 'cmake -D MAKE_BUILD_TYPE=RELEASE -D MAKE_INSTALL_PREFIX=/usr/local ' \
-                 '-D BUILD_PERF_TESTS=OFF -D WITH_GTK=OFF -D WITH_FFMPEG=OFF ' \
-                 '-D WITH_GSTREAMER=OFF -D WITH_CUDA=OFF ..',
-        cwd: "#{opencv_path}/release",
-        creates: "#{opencv_path}/release/Makefile"
-      )
-
-      expect(chef_run).to run_execute('make_opencv').with(
-        command: 'make -j4 && make install && ldconfig',
-        cwd: "#{opencv_path}/release",
-        creates: "/usr/local/lib/libopencv_core.so.#{opencv_version}"
-      )
-    end
+    it_behaves_like 'ds_opencv'
   end
 end
