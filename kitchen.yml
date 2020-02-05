@@ -34,3 +34,23 @@ suites:
     run_list:
       - recipe[opencv::default]
     attributes:
+
+  - name: v2.x
+    driver:
+      tags:
+        Name: opencv-v2.x-ubuntu-1804
+    run_list:
+      - recipe[opencv::default]
+    attributes:
+      opencv:
+        opencv:
+          version: 2.4.13.6
+          dependencies:
+            - cmake
+            - libgtk2.0-dev
+            - pkg-config
+            - libavcodec-dev
+            - libavformat-dev
+            - libswscale-dev
+            - python-dev
+            - python-numpy
