@@ -16,6 +16,9 @@ provisioner:
 
 verifier:
   name: inspec
+  reporter:
+    - cli
+    - junit:test-results/acceptance/results.xml
 
 platforms:
   - name: ubuntu-18.04
