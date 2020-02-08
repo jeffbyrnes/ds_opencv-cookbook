@@ -21,7 +21,7 @@ require 'spec_helper'
 
 describe 'ds_opencv::default' do
   context 'When all attributes are default, on Ubuntu 18.04' do
-    let(:chef_run) { ChefSpec::ServerRunner.new.converge described_recipe }
+    platform 'ubuntu', '18.04'
 
     let(:opencv_path) { '/opt/opencv-3.2.0' }
     let(:opencv_version) { '3.2.0' }
