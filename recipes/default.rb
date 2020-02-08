@@ -3,8 +3,8 @@
 #
 # Copyright (c) 2017 The Dark Sky Company, LLC, All Rights Reserved.
 
-include_recipe 'apt'
-include_recipe 'build-essential'
+apt_update
+build_essential
 include_recipe 'git'
 
 %w(

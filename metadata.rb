@@ -9,10 +9,8 @@ version          '1.3.2'
 source_url 'https://github.com/darkskyapp/ds_opencv-cookbook'
 issues_url 'https://github.com/darkskyapp/ds_opencv-cookbook/issues'
 
-chef_version '>= 12.11'
+chef_version '>= 14.1.1'
 
 supports 'ubuntu', '= 18.04'
 
-depends 'apt'
-depends 'build-essential'
 depends 'git'

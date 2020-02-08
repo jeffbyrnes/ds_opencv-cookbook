@@ -17,14 +17,6 @@ describe 'ds_opencv::default' do
       expect { chef_run }.to_not raise_error
     end
 
-    it 'updates apt' do
-      expect(chef_run).to include_recipe 'apt'
-    end
-
-    it 'sets up our build environment' do
-      expect(chef_run).to include_recipe 'build-essential'
-    end
-
     %w(
       cmake
       gfortran
