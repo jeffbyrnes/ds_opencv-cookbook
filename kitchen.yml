@@ -1,0 +1,33 @@
+---
+driver:
+  name: dokken
+  privileged: true  # because Docker and SystemD/Upstart
+  chef_version: 15
+
+transport:
+  name: dokken
+
+provisioner:
+  name: dokken
+  deprecations_as_errors: false
+  chef_license: accept
+  client_rb:
+    environment: test
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-18.04
+    driver:
+      image: dokken/ubuntu-18.04
+      pid_one_command: /bin/systemd
+
+suites:
+  - name: default
+    driver:
+      tags:
+        Name: ds-opencv-default-ubuntu-1804
+    run_list:
+      - recipe[ds_opencv::default]
+    attributes:

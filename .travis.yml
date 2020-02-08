@@ -1,23 +1,16 @@
+---
 language: ruby
+services:
+  - docker
 cache:
   directories:
   - "$HOME/.berkshelf"
-addons:
-  apt:
-    sources:
-    - chef-stable-trusty
-    packages:
-    - chefdk
 if: (type = pull_request) OR (tag IS present)
+env:
+  global:
+    CHEF_LICENSE: accept-no-persist
 before_install:
-- openssl aes-256-cbc -K $encrypted_25d68ab26777_key -iv $encrypted_25d68ab26777_iv
-  -in secrets.tar.enc -out secrets.tar -d
-- tar -xvf secrets.tar -C $HOME
-- mv $HOME/.aws/ds_travis_credentials $HOME/.aws/credentials
-- echo 'node_name "darksky"' >> $HOME/.chef/knife.rb
-- echo "client_key '$HOME/.chef/darksky.pem'" >> $HOME/.chef/knife.rb
-- echo 'chef_server_url "https://chef.darksky.net/organizations/darksky"' >> $HOME/.chef/knife.rb
-- chmod 600 $HOME/.chef/knife.rb $HOME/.chef/darksky.pem
+- curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -c stable -P chef-workstation
 - chef --version
 - eval "$(chef shell-init bash)"
 install:
@@ -26,23 +19,8 @@ jobs:
   include:
   - stage: test
     script: chef exec delivery local all
-  - stage: GitHub Release
-    script: echo "Deploying to GitHub releases ..."
-    deploy:
-      provider: releases
-      api_key:
-        secure: RbhEcAGsrCnBipzXwLn9s14HQOyA08AzwvAIBqTtR4ABwdy+HoRux5+kY13Wn9WLqNss8MJcxF6MehEbNPhg/2ZuXN9SOaq82sCGepeXYb4+d7WHkFsWhMaikocfRoR0nqqL901MxwJypGb8U9QeLxLU0lnUWHFFVhGqgQjRjWaGKcYggnO4YhppPFN4WiCeH3VA0dMjivv43ddON7dshJkwOY6k8fL3V1ySmCduAEkVzfu5KiFI67fIV0wpOVtL9aP3mlV1hwmfi0FRXDx4LtMQ0Mxum7BBjyEv7ysbh3aujXk+deaP/5d6uYDSTZiiDwY5JTBxFs+pEVssz9T4XIFfwsnCSJ7J9vaUPoy6iTMX4WBeBa/zhKAYlBICeIzqM0FS4WcctxYzci/tjctBejLmfFP8Hb2nqB/9F17Msdu7Ctos/ipuJHcF3ZlkraO/lnbuSnbdFy1uazEa8/dkF/aOjpKNi/j+atYO5y5/AOY6CjeRjsueD7rzLlzexUQmzS9RzYj+kbNzvbqTauj9C8yh2xFoxNJ1WljIQtcw+BNRdYbBvMg5lRC35+0oWmVh0Kl5XIVK1DjYmkdWElHsHNq52MrNQbhJuByRTpOS/qvIU7mJqXQDKymQqxfnQn0xcDBMThHFh3w5CHqC1qPlzcxc1mdzsJdPUCa4fl8pPIY=
-      skip_cleanup: true
-      on:
-        tags: true
-  - stage: Publish to Supermarket
-    script: echo "Uploading to Chef Supermarket ..."
-    deploy:
-      provider: script
-      script: chef exec stove --no-git --username darksky --key $HOME/.chef/darksky.pem
-      skip_cleanup: true
-      on:
-        tags: true
+  - stage: acceptance
+    script: chef exec kitchen test
 notifications:
   slack:
     secure: U3YDfrgI8V8ns5e69IWhA0K6sCJKO7qkJnmwffANv0u7cADq1hYBmNwNtPIJdPjENUnbw/5YI3jA2oRd9j9Sk++pPSXGN3QIHGFjdA6kVwfN8snJdGC4/cbBv7lCUz5Os/38+jx5sK+RHG47oS6KQzNbsApqhy46H/as+TD4eXkVrSc1hCsEkkx/2rEEzZwzXox+sGWqPybcHDnA0BnE3/70yHhH41AJD3I14pkPeQlQsdQWdz2KRNnUPQZo+5xaP4KeaujyOxsynnfVu2l3gp6vrvdiFy3R4aySQQj9GaRXyTf4f6utP+QCTA0HnM8O+zUUJuLVVi4qWDnSpvi0vDQsAt2fNsaE4pceVQqueKccYR/VqYTF6kRewqJZ+ogdRPUNx+pKtbIogpex9LQAJ4NGeQiI9GC0OdDMpsn8buDMw5B+w+C0iZu9lUNoO5rkM7erQK+WEKmfwuvrA6ciLuHMH9YHwg70AJQCJAFBTcBZ1OLJ22+0854XHEdSj6Oc26FXOgsBaAGrDgRzME5GgNCXYrVFuTRjcnEOuXSbp900nUHUbu2jjotlQI79bZK0kyl3QfzxwxLRNy/H3z4S+YxYhDc8ilCDNvQB9KhtqTTODkPt26cYxrfA6aV9nPEq30a1MZpapAYRyXA5TYogg5GBDtU0ROcrCqack/Dexwg=
