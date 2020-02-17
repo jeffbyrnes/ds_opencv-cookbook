@@ -1,4 +1,4 @@
-# ds_opencv [![Build Status](https://travis-ci.org/jeffbyrnes/ds_opencv-cookbook.svg?branch=master)](https://travis-ci.org/jeffbyrnes/ds_opencv-cookbook) [![Version](https://img.shields.io/cookbook/v/magic.svg)](https://supermarket.chef.io/cookbooks/ds_opencv)
+# ds_opencv [![CircleCI](https://circleci.com/gh/jeffbyrnes/ds_opencv-cookbook.svg?style=svg)](https://circleci.com/gh/jeffbyrnes/ds_opencv-cookbook) [![Version](https://img.shields.io/cookbook/v/magic.svg)](https://supermarket.chef.io/cookbooks/ds_opencv)
 
 Cookbook to build and install opencv
 

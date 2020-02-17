@@ -1,0 +1,49 @@
+---
+version: 2.1
+
+jobs:
+  verify:
+    docker:
+      - image: chef/chefworkstation:latest
+    environment:
+      CHEF_LICENSE: accept-no-persist
+    steps:
+      - checkout
+      - run:
+          name: Install test results formatter
+          command: chef gem install rspec_junit_formatter
+      - run:
+          name: Verify
+          command: chef exec delivery local verify
+      - store_test_results:
+          path: test-results
+
+  acceptance:
+    machine:
+      image: ubuntu-1604:201903-01
+    environment:
+      CHEF_LICENSE: accept-no-persist
+    steps:
+      - checkout
+      - run:
+          name: Install Chef Workstation
+          command: |
+            curl -L https://omnitruck.chef.io/install.sh |
+              sudo bash -s -- -c stable -P chef-workstation
+      - run:
+          name: Acceptance
+          command: chef exec delivery local acceptance
+      - store_test_results:
+          path: test-results
+      - store_artifacts:
+          path: .kitchen/logs
+          when: always
+
+workflows:
+  version: 2.1
+  verify_and_acceptance:
+    jobs:
+      - verify
+      - acceptance:
+          requires:
+            - verify
