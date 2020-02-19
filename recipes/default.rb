@@ -18,16 +18,18 @@
 
 apt_update
 build_essential
-include_recipe 'git'
+
+include_recipe 'ark'
 
 package node['ds_opencv']['opencv']['dependencies']
 
 opencv_path = node['ds_opencv']['opencv']['path']
 
-git opencv_path do
-  repository 'https://github.com/opencv/opencv.git'
-  revision   node['ds_opencv']['opencv']['version']
-  action     :checkout
+ark 'opencv' do
+  url node['ds_opencv']['opencv']['url']
+  prefix_root '/opt'
+  prefix_home '/opt'
+  version node['ds_opencv']['opencv']['version']
 end
 
 directory "#{opencv_path}/release"

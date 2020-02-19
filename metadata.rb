@@ -12,4 +12,4 @@ chef_version '>= 14.1.1'
 
 supports 'ubuntu', '= 18.04'
 
-depends 'git'
+depends 'ark', '~> 5.0'

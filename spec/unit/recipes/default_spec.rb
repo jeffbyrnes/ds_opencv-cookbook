@@ -23,7 +23,7 @@ describe 'ds_opencv::default' do
   context 'When all attributes are default, on Ubuntu 18.04' do
     platform 'ubuntu', '18.04'
 
-    let(:opencv_path) { '/opt/opencv-3.2.0' }
+    let(:opencv_path) { '/opt/opencv' }
     let(:opencv_version) { '3.2.0' }
 
     it 'converges successfully' do
@@ -43,11 +43,8 @@ describe 'ds_opencv::default' do
       end
     end
 
-    it 'clones and checks out OpenCV v3.2.0' do
-      expect(chef_run).to checkout_git(opencv_path).with(
-        repository: 'https://github.com/opencv/opencv.git',
-        revision: opencv_version.to_s
-      )
+    it 'downloads and unarchives OpenCV' do
+      expect(chef_run).to install_ark('opencv').with url: "https://github.com/opencv/opencv/archive/#{opencv_version}.zip"
     end
 
     it 'creates a release dir for OpenCV' do
