@@ -61,7 +61,6 @@ describe 'ds_opencv::default' do
       )
 
       expect(chef_run).to run_execute('make_opencv').with(
-        command: 'make -j4 && make install && ldconfig',
         cwd: "#{opencv_path}/release",
         creates: "/usr/local/lib/libopencv_core.so.#{opencv_version}"
       )
