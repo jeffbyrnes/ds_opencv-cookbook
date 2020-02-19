@@ -34,8 +34,8 @@ end
 
 directory "#{opencv_path}/release"
 
-cmake_define = node['ds_opencv']['opencv']['cmake_define']
-               .map { |k, v| "-D #{k}=#{v}" }.join(' ')
+# README: Create a space-delimted list of cmake arguments
+cmake_define = node['ds_opencv']['opencv']['cmake_define'].map { |k, v| "-D #{k}=#{v}" }.join(' ')
 
 execute 'cmake_opencv' do
   command "cmake #{cmake_define} .."
@@ -46,6 +46,5 @@ end
 execute 'make_opencv' do
   command "make --jobs=#{node['cpu']['total']} && make install && ldconfig"
   cwd     "#{opencv_path}/release"
-  creates node['ds_opencv']['opencv']['cmake_define']['MAKE_INSTALL_PREFIX'] +
-          "/lib/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
+  creates "#{node['ds_opencv']['opencv']['cmake_define']['MAKE_INSTALL_PREFIX']}/lib/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
 end
