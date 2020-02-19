@@ -20,7 +20,7 @@ control 'ds_opencv' do
     end
   end
 
-  describe file '/usr/local/lib/libopencv_core.so.3.2.0' do
+  describe file '/usr/local/lib/libopencv_core.so.3.4.9' do
     it { should exist }
   end
 end

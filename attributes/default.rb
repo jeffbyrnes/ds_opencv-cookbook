@@ -1,4 +1,4 @@
-default['ds_opencv']['opencv']['version'] = '3.2.0'
+default['ds_opencv']['opencv']['version'] = '3.4.9'
 default['ds_opencv']['opencv']['url'] = "https://github.com/opencv/opencv/archive/#{node['ds_opencv']['opencv']['version']}.zip"
 default['ds_opencv']['opencv']['path'] = '/opt/opencv'
 

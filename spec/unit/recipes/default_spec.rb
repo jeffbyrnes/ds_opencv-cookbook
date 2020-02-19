@@ -24,7 +24,7 @@ describe 'ds_opencv::default' do
     platform 'ubuntu', '18.04'
 
     let(:opencv_path) { '/opt/opencv' }
-    let(:opencv_version) { '3.2.0' }
+    let(:opencv_version) { '3.4.9' }
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
