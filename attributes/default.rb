@@ -10,3 +10,12 @@ default['ds_opencv']['opencv']['cmake_define'] = {
   'WITH_GSTREAMER' => 'OFF',
   'WITH_CUDA' => 'OFF',
 }
+
+default['ds_opencv']['opencv']['dependencies'] = %w(
+  cmake
+  gfortran
+  libjpeg8-dev
+  libtiff5-dev
+  libpng-dev
+  libatlas-base-dev
+)

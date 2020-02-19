@@ -20,16 +20,7 @@ apt_update
 build_essential
 include_recipe 'git'
 
-%w(
-  cmake
-  gfortran
-  libjpeg8-dev
-  libtiff5-dev
-  libpng-dev
-  libatlas-base-dev
-).each do |pkg|
-  package pkg
-end
+package node['ds_opencv']['opencv']['dependencies']
 
 opencv_path = node['ds_opencv']['opencv']['path']
 
