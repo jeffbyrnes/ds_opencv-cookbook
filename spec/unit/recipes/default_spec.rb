@@ -23,24 +23,10 @@ describe 'ds_opencv::default' do
   context 'When all attributes are default, on Ubuntu 18.04' do
     platform 'ubuntu', '18.04'
 
-    let(:opencv_path) { '/opt/opencv' }
     let(:opencv_version) { '3.4.9' }
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
-    end
-
-    %w(
-      cmake
-      gfortran
-      libjpeg8-dev
-      libtiff5-dev
-      libpng-dev
-      libatlas-base-dev
-    ).each do |pkg|
-      it "installs #{pkg}" do
-        expect(chef_run).to install_package pkg
-      end
     end
 
     it 'downloads and unarchives OpenCV' do
@@ -48,20 +34,13 @@ describe 'ds_opencv::default' do
     end
 
     it 'creates a release dir for OpenCV' do
-      expect(chef_run).to create_directory "#{opencv_path}/release"
+      expect(chef_run).to create_directory '/opt/opencv/release'
     end
 
     it 'builds & installs OpenCV from source' do
-      expect(chef_run).to run_execute('cmake_opencv').with(
-        command: 'cmake -D MAKE_BUILD_TYPE=RELEASE -D MAKE_INSTALL_PREFIX=/usr/local ' \
-                 '-D BUILD_PERF_TESTS=OFF -D WITH_GTK=OFF -D WITH_FFMPEG=OFF ' \
-                 '-D WITH_GSTREAMER=OFF -D WITH_CUDA=OFF ..',
-        cwd: "#{opencv_path}/release",
-        creates: "#{opencv_path}/release/Makefile"
-      )
+      expect(chef_run).to run_execute 'cmake_opencv'
 
       expect(chef_run).to run_execute('make_opencv').with(
-        cwd: "#{opencv_path}/release",
         creates: "/usr/local/lib/libopencv_core.so.#{opencv_version}"
       )
     end
