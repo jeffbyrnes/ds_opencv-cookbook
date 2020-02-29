@@ -1,5 +1,16 @@
 # CHANGELOG for `opencv` cookbook
 
+## v2.0.0
+
+* Rename cookbook back to `opencv`
+* Add Ubuntu 18.04 support
+* Refactor for Chef >= 14.1.1
+* Use `kitchen-dokken` for testing
+* Test against Chef 15
+* Download & unpack an archive of OpenCV instead of using git
+* Clean up various elements
+* Use CircleCI instead of Travis CI for testing
+
 ## v1.3.2
 
 * Fix up Test Kitchen + Travis CI setup
