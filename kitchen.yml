@@ -32,5 +32,5 @@ suites:
       tags:
         Name: ds-opencv-default-ubuntu-1804
     run_list:
-      - recipe[ds_opencv::default]
+      - recipe[opencv::default]
     attributes:

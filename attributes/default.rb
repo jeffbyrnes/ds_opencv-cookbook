@@ -1,8 +1,8 @@
-default['ds_opencv']['opencv']['version'] = '3.4.9'
-default['ds_opencv']['opencv']['url'] = "https://github.com/opencv/opencv/archive/#{node['ds_opencv']['opencv']['version']}.zip"
-default['ds_opencv']['opencv']['path'] = '/opt/opencv'
+default['opencv']['opencv']['version'] = '3.4.9'
+default['opencv']['opencv']['url'] = "https://github.com/opencv/opencv/archive/#{node['opencv']['opencv']['version']}.zip"
+default['opencv']['opencv']['path'] = '/opt/opencv'
 
-default['ds_opencv']['opencv']['cmake_define'] = {
+default['opencv']['opencv']['cmake_define'] = {
   'MAKE_BUILD_TYPE' => 'RELEASE',
   'MAKE_INSTALL_PREFIX' => '/usr/local',
   'BUILD_PERF_TESTS' => 'OFF',
@@ -12,7 +12,7 @@ default['ds_opencv']['opencv']['cmake_define'] = {
   'WITH_CUDA' => 'OFF',
 }
 
-default['ds_opencv']['opencv']['dependencies'] = %w(
+default['opencv']['opencv']['dependencies'] = %w(
   cmake
   gfortran
   libjpeg8-dev

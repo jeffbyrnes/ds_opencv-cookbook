@@ -1,4 +1,4 @@
-# CHANGELOG for `ds_opencv` cookbook
+# CHANGELOG for `opencv` cookbook
 
 ## v1.3.2
 

@@ -1,8 +1,8 @@
 #
-# Cookbook:: ds_opencv
+# Cookbook:: opencv
 # Spec:: default
 #
-# Copyright:: (c) 2016 The Dark Sky Company, LLC
+# Copyright:: (c) 2020 Jeff Byrnes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 
 require 'spec_helper'
 
-describe 'ds_opencv::default' do
+describe 'opencv::default' do
   context 'When all attributes are default, on Ubuntu 18.04' do
     platform 'ubuntu', '18.04'
 

@@ -1,7 +1,7 @@
 #
-# Recipe:: ds_opencv
+# Recipe:: opencv
 #
-# Copyright:: (c) 2017 The Dark Sky Company, LLC
+# Copyright:: (c) 2020 Jeff Byrnes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,21 +21,21 @@ build_essential
 
 include_recipe 'ark'
 
-package node['ds_opencv']['opencv']['dependencies']
+package node['opencv']['opencv']['dependencies']
 
-opencv_path = node['ds_opencv']['opencv']['path']
+opencv_path = node['opencv']['opencv']['path']
 
 ark 'opencv' do
-  url node['ds_opencv']['opencv']['url']
+  url node['opencv']['opencv']['url']
   prefix_root '/opt'
   prefix_home '/opt'
-  version node['ds_opencv']['opencv']['version']
+  version node['opencv']['opencv']['version']
 end
 
 directory "#{opencv_path}/release"
 
 # README: Create a space-delimted list of cmake arguments
-cmake_define = node['ds_opencv']['opencv']['cmake_define'].map { |k, v| "-D #{k}=#{v}" }.join(' ')
+cmake_define = node['opencv']['opencv']['cmake_define'].map { |k, v| "-D #{k}=#{v}" }.join(' ')
 
 execute 'cmake_opencv' do
   command "cmake #{cmake_define} .."
@@ -46,5 +46,5 @@ end
 execute 'make_opencv' do
   command "make --jobs=#{node['cpu']['total']} && make install && ldconfig"
   cwd     "#{opencv_path}/release"
-  creates "#{node['ds_opencv']['opencv']['cmake_define']['MAKE_INSTALL_PREFIX']}/lib/libopencv_core.so.#{node['ds_opencv']['opencv']['version']}"
+  creates "#{node['opencv']['opencv']['cmake_define']['MAKE_INSTALL_PREFIX']}/lib/libopencv_core.so.#{node['opencv']['opencv']['version']}"
 end
