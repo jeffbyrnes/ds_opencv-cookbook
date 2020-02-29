@@ -33,7 +33,17 @@ suites:
         Name: opencv-default-ubuntu-1804
     run_list:
       - recipe[opencv::default]
+
+  - name: v4.x
+    driver:
+      tags:
+        Name: opencv-v4.x-ubuntu-1804
+    run_list:
+      - recipe[opencv::default]
     attributes:
+      opencv:
+        opencv:
+          version: 4.2.0
 
   - name: v2.x
     driver:
