@@ -1,12 +1,11 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-# Generate a report
-ChefSpec::Coverage.start!
-
 RSpec.configure do |c|
-  c.color     = true
-  c.formatter = :documentation
-  c.platform  = 'ubuntu'
-  c.version   = '16.04'
+  c.add_formatter 'documentation'
+
+  # Add JUnit output for CI
+  if ENV['CI']
+    c.add_formatter 'RspecJunitFormatter', './test-results/verify/results.xml'
+  end
 end
