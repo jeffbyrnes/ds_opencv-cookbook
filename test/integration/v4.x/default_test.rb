@@ -5,7 +5,7 @@
 
 control 'opencv' do
   impact 1.0
-  title 'Verify OpenCV v3.x and its dependencies are installed'
+  title 'Verify OpenCV and its dependencies are installed'
 
   %w(
     cmake
@@ -20,7 +20,7 @@ control 'opencv' do
     end
   end
 
-  describe file '/usr/local/lib/libopencv_core.so.3.4.9' do
+  describe file '/usr/local/lib/libopencv_core.so.4.2.0' do
     it { should exist }
   end
 end
